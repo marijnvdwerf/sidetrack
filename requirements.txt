@@ -1,0 +1,5 @@
+capstone==4.0.2
+hexdump==3.3
+python-idb==0.5.0
+six==1.15.0
+vivisect-vstruct-wb==1.0.3
