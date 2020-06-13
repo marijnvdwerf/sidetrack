@@ -49,9 +49,30 @@ class InstructionFormatter:
 
         return ""
 
+    def format_ret_op(self, ins: capstone.CsInsn):
+        # Should this also remove an item off the stack?
+        return "return;".format(ins.mnemonic)
+
+    def format_simple_op(self, ins: capstone.CsInsn):
+        return "emu.{0}();".format(ins.mnemonic)
+
     def format(self, instruction: capstone.CsInsn) -> str:
         switch = {
-            "push": self.format_push_op
+            "push": self.format_push_op,
+            "ret": self.format_ret_op,
+
+            "clc": self.format_simple_op,
+            "cld": self.format_simple_op,
+            "cmc": self.format_simple_op,
+            "movsb": self.format_simple_op,
+            "movsw": self.format_simple_op,
+            "movsd": self.format_simple_op,
+            "popfd": self.format_simple_op,
+            "pushfd": self.format_simple_op,
+            "std": self.format_simple_op,
+            "popal": self.format_simple_op,
+            "pushal": self.format_simple_op,
+            "stc": self.format_simple_op,
         }
 
         fn = switch.get(instruction.mnemonic, None)
