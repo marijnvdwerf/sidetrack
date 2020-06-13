@@ -53,7 +53,7 @@ def renderFunction(db: idb.IDAPython, cs: capstone.Cs, fnEa: int):
                 fh = open('out/{0}.txt'.format(instruction.mnemonic), 'w')
                 mnemFiles[instruction.mnemonic] = fh
             fh = mnemFiles.get(instruction.mnemonic)
-            fh.write("{0} {1}\n".format(instruction.mnemonic, instruction.op_str))
+            fh.write("{0} {1} ; {2}\n".format(instruction.mnemonic, instruction.op_str, instruction.bytes.hex()))
 
     return
 
