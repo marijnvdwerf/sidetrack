@@ -96,7 +96,7 @@ class InstructionFormatter:
     def format_mov_op(self, ins: capstone.CsInsn):
         dest: X86Op = ins.operands[0]
         src: X86Op = ins.operands[1]
-        if dest.type == X86_OP_REG and src.type == X86_OP_IMM:
+        if dest.type == X86_OP_REG:
             destStr = self.format_dest(dest)
             srcStr = self.format_src(src)
             return "{0} = {1};".format(destStr, srcStr)

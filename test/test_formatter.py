@@ -37,6 +37,10 @@ class TestAnswer(unittest.TestCase):
         asm = b'\xB9\x00\x00\x00\x00'  # mov ecx, 0
         self.assertEqual(convert(asm), "emu.ecx = 0;")
 
+    def test_mov_reg16_reg16(self):
+        asm = b'\x66\x8B\xC2'  # mov ax, dx
+        self.assertEqual(convert(asm), "emu.ax = emu.dx;")
+
     def test_pushal(self):
         asm = b'\x60'  # pushal
         self.assertEqual(convert(asm), "emu.pushal();")
