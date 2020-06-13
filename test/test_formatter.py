@@ -25,6 +25,18 @@ class TestAnswer(unittest.TestCase):
         asm = b'\x66\x50'  # push ax
         self.assertEqual(convert(asm), "emu.push16(emu.ax);")
 
+    def test_mov_reg8_imm(self):
+        asm = b'\xB4\x01'  # mov ah, 1
+        self.assertEqual(convert(asm), "emu.ah = 1;")
+
+    def test_mov_reg16_imm(self):
+        asm = b'\x66\xBE\x1C\x00'  # mov si, 0x1c
+        self.assertEqual(convert(asm), "emu.si = 0x1C;")
+
+    def test_mov_reg32_imm(self):
+        asm = b'\xB9\x00\x00\x00\x00'  # mov ecx, 0
+        self.assertEqual(convert(asm), "emu.ecx = 0;")
+
     def test_pushal(self):
         asm = b'\x60'  # pushal
         self.assertEqual(convert(asm), "emu.pushal();")
@@ -42,7 +54,7 @@ class TestAnswer(unittest.TestCase):
         self.assertEqual(convert(asm), "emu.popfd();")
 
     def test_movsb(self):
-        asm = b'\xA4'  # std
+        asm = b'\xA4'  # movsb
         self.assertEqual(convert(asm), "emu.movsb();")
 
     def test_movsd(self):
@@ -50,12 +62,12 @@ class TestAnswer(unittest.TestCase):
         self.assertEqual(convert(asm), "emu.movsd();")
 
     def test_movsw(self):
-        asm = b'\x66\xA5'  # std
+        asm = b'\x66\xA5'  # movsw
         self.assertEqual(convert(asm), "emu.movsw();")
 
     def test_ret(self):
         asm = b'\xC3'  # ret
-        self.assertEqual(convert(asm), "return;");
+        self.assertEqual(convert(asm), "return;")
 
     def test_cmc(self):
         asm = b'\xF5'  # cmc
