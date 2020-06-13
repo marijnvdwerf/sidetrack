@@ -39,7 +39,7 @@ def renderFunction(db: idb.IDAPython, cs: capstone.Cs, fnEa: int):
         flags = db.idc.GetFlags(instruction.address)
         if (flags & 0x00000600) != 0x00000600:
             # not code
-            print("Early escape {0:x}\n".format(instruction.address))
+            print("Early escape {0:x}".format(instruction.address))
             return
 
         try:
@@ -76,8 +76,8 @@ def main():
             renderFunction(api, cs, ea)
 
         total = failures + success
-        print("Failures:  {0} ({1}%)\n".format(failures, failures / total * 100))
-        print("Successes: {0} ({1}%)\n".format(success, success / total * 100))
+        print("Failures:  {0} ({1}%)".format(failures, failures / total * 100))
+        print("Successes: {0} ({1}%)".format(success, success / total * 100))
 
 
 if __name__ == '__main__':
