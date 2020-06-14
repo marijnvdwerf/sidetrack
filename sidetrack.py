@@ -86,6 +86,18 @@ class InstructionFormatter:
 
         return ""
 
+    def format_pop_op(self, ins: capstone.CsInsn):
+        if (len(ins.operands) != 1):
+            raise UnhandledArgumentException("unhandled argument count")
+
+        op: X86Op = ins.operands[0]
+        if op.size == 4:
+            return "{0} = emu.pop();".format(self.format_dest(op))
+        elif op.size == 2:
+            return "{0} = emu.pop16();".format(self.format_dest(op))
+        else:
+            raise UnhandledArgumentException("unhandled argument type")
+
     def format_ret_op(self, ins: capstone.CsInsn):
         # Should this also remove an item off the stack?
         return "return;".format(ins.mnemonic)
@@ -106,6 +118,7 @@ class InstructionFormatter:
     def format(self, instruction: capstone.CsInsn) -> str:
         switch = {
             "push": self.format_push_op,
+            "pop": self.format_pop_op,
             "ret": self.format_ret_op,
             "mov": self.format_mov_op,
 

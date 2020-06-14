@@ -25,6 +25,14 @@ class TestAnswer(unittest.TestCase):
         asm = b'\x66\x50'  # push ax
         self.assertEqual(convert(asm), "emu.push16(emu.ax);")
 
+    def test_pop_reg32(self):
+        asm = b'\x5E'  # pop esi
+        self.assertEqual(convert(asm), "emu.esi = emu.pop();")
+
+    def test_pop_reg16(self):
+        asm = b'\x66\x58'  # pop ax
+        self.assertEqual(convert(asm), "emu.ax = emu.pop16();")
+
     def test_mov_reg8_imm(self):
         asm = b'\xB4\x01'  # mov ah, 1
         self.assertEqual(convert(asm), "emu.ah = 1;")
